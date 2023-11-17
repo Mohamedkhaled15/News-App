@@ -2,13 +2,16 @@
 class Assets {
   Assets._();
 
+  static const String imagesBu = 'assets/images/bu.jpg';
   static const String imagesBusiness = 'assets/images/business.avif';
   static const String imagesEntertaiment = 'assets/images/entertaiment.avif';
   static const String imagesGeneral = 'assets/images/general.avif';
   static const String imagesHealth = 'assets/images/health.avif';
   static const String imagesKoler = 'assets/images/koler.jpeg';
   static const String imagesScience = 'assets/images/science.avif';
+
   static const String imagesSports = 'assets/images/sports.avif';
+  static const String imagesSports2 = 'assets/images/sports2.jpeg';
   static const String imagesTechnology = 'assets/images/technology.jpeg';
   static const String imagesTreka = 'assets/images/treka.jpg';
 

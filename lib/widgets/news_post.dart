@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/article_model.dart';
 
 class NewsPost extends StatelessWidget {
   const NewsPost({
-    super.key,
+    super.key, required this.articleModel,
   });
-
+final ArticleModel articleModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,18 +14,19 @@ class NewsPost extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Image.asset(
-              'assets/images/koler.jpeg',
+            child:articleModel.image != null? Image.network(
+              articleModel.image!,
               height: 200,
               width: double.infinity,
               fit: BoxFit.fill,
-            ),
+            ):Image.asset('assets/images/treka.jpg'),
+
           ),
           const SizedBox(height: 12,),
-          const Text('Large Title 3la fekra Abo khaled hewa Abo 3mo weAbo 3mo hewa Abo khaled this is true fact ',
+          Text(articleModel.title,
             maxLines: 2,
           overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.w500
@@ -32,13 +34,13 @@ class NewsPost extends StatelessWidget {
 
           ),
           const SizedBox(height: 8,),
-          const Text('Sub Title',
+          articleModel.subTitle != null?Text(articleModel.subTitle!,
           maxLines: 2,
             style: TextStyle(
               color: Colors.grey,
               fontSize:14
             ),
-          )
+          ):const Text('Sub Title'),
 
         ],
       ),
