@@ -2,10 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/models/article_model.dart';
 import 'package:news_app/services/news_services.dart';
+import 'package:news_app/widgets/error_message.dart';
 import 'package:news_app/widgets/news_list_view.dart';
 
 class NewsListViewBuilder extends StatefulWidget {
-  const NewsListViewBuilder({
+  NewsListViewBuilder({
     super.key,
   });
 
@@ -14,28 +15,40 @@ class NewsListViewBuilder extends StatefulWidget {
 }
 
 class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
-  List<ArticleModel> articles = [];
   bool isLoading = true;
-
-  @override
+  var future;
+@override
   void initState() {
+
     super.initState();
-    getGeneralData();
+    future=NewsServices(Dio()).getGeneralNews();
   }
-
-  Future<void> getGeneralData() async {
-    articles = await NewsServices(Dio()).getGeneralNews();
-    isLoading = false;
-    setState(() {});
-  }
-
+  // @override
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const SliverFillRemaining(
-            child: Center(child: CircularProgressIndicator()))
-        :articles.isNotEmpty? NewsListView(
-            articles: articles,
-          ):SliverFillRemaining(child: Image.asset('assets/images/error.png',fit: BoxFit.contain),);
+    // return isLoading
+    //     ? const SliverFillRemaining(
+    //         child: Center(child: CircularProgressIndicator()))
+    //     :articles.isNotEmpty? NewsListView(
+    //         articles: articles,
+    //       ):SliverFillRemaining(child: Image.asset('assets/images/error.png',fit: BoxFit.contain),);
+
+    return FutureBuilder<List<ArticleModel>>(
+        future: future,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return NewsListView(
+              articles: snapshot.data!,
+            );
+          }
+          else if(snapshot.hasError){
+            return  const ErrorMessage();
+          }
+           else{
+            return const SliverFillRemaining(child: Center(child: CircularProgressIndicator()),);
+          }
+        });
   }
 }
+
+
