@@ -25,7 +25,7 @@ class HomeViewBody extends StatelessWidget {
             height: 32,
           ),
         ),
-         NewsListViewBuilder(),
+         const NewsListViewBuilder(category: 'general'),
 
 
 //Vertical List view
